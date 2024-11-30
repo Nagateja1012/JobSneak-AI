@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application</title>
+  <link rel="stylesheet" href="popup1.css">
+</head>
+<body>
+
+  <!-- Container for the main layout -->
+  <div class="container">
+
+    <!-- Logo Section -->
+    <div class="logo-container">
+      <img src="../images/icon128.png" alt="Logo" class="logo-img">
+      <h2 class="title">JobSneak AI</h2>
+    </div>
+
+    <!-- Resume Selection Section -->
+    <div class="resume-selection">
+      <label for="resume-option">Select an option:</label>
+      <select id="resume-option" name="resume-option">
+        <option value="upload">Upload Resume</option>
+        <option value="type">Type into Text Field</option>
+      </select>
+
+      <div id="upload-resume" class="resume-option">
+        <label for="resume-file">Upload Resume</label>
+        <input type="file" id="resume-file" name="resume-file" accept="application/pdf">
+      </div>
+
+      <div id="type-resume" class="resume-option">
+        <label for="resume-text">Type your Resume</label>
+        <textarea id="resume-text" name="resume-text" rows="10" placeholder="Enter your resume here..."></textarea>
+      </div>
+
+      <div class="buttons">
+        <button id="save-btn">Save</button>
+        <button id="clear-btn">Clear</button>
+        <button id="delete-btn">Delete Saved Data</button>
+      </div>
+    </div>
+    <div id="output" style="margin-top: 20px; white-space: pre-wrap;"></div>
+
+    <div class="logo-container">
+        <h4 class="stitle">App Status</h4>
+        </div>
+    <!-- Progress Tracker Section -->
+     <div class="tracker">
+    <div class="tracker-container">
+        
+        <div class="tracker-stage" id="stage-1" data-status="not-started">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        <div class="tracker-stage" id="stage-2" data-status="processing">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        <div class="tracker-stage" id="stage-3" data-status="completed">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        <div class="tracker-stage" id="stage-4" data-status="errors">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        <div class="tracker-stage" id="stage-5" data-status="not-started">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        <div class="tracker-stage" id="stage-6" data-status="processing">
+          <span class="stage-number"></span>
+          <div class="stage-tooltip"></div>
+        </div>
+        
+  </div>
+  <div class="warning card" hidden id="warning"></div>
+</div>
+
+  <script src="popup1.js"></script>
+</body>
+</html>
