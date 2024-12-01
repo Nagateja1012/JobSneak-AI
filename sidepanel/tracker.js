@@ -6,16 +6,17 @@ const stages = [
     { id: "stage-3", status: "not-started", tooltip: "Not Started" , error:""},
     { id: "stage-4", status: "not-started", tooltip: "Not Started", error:""},
     { id: "stage-5", status: "not-started", tooltip: "Not Started" , error:""},
-    { id: "stage-6", status: "not-started", tooltip: "Not Started", error:""},
   ];
   
   // Function to update the status and color of a stage
-export function updateStageColor(stageId, status) {
+export function updateStageColor(stageId, status, error) {
     const stageElement = document.getElementById(stageId);
     const stageData = stages.find((stage) => stage.id === stageId);
   
     // Update the status
     stageData.status = status;
+    if(status === "error") stageData.error = error;
+    
   
     // Remove previous status class
     stageElement.classList.remove(
@@ -50,26 +51,48 @@ export function updateStageColor(stageId, status) {
   stages.forEach((stage) => {
     updateStageColor(stage.id, stage.status);
   });
+
+  const warningElement = document.getElementById("warninge");
   
   // Add event listeners for clicking on stages
   document.querySelectorAll(".tracker-stage").forEach((stageElement) => {
-    const warningElement = document.body.querySelector("#warning");
+    
     async function updateWarning(warning) {
+        
       warningElement.textContent = warning;
       if (warning) {
-        warningElement.removeAttribute("hidden");
+        warningElement.classList.remove("hidden");
       } else {
-        warningElement.setAttribute("hidden", "");
+        warningElement.classList.add("hidden");
       }
     }
     stageElement.addEventListener("click", () => {
+        
+        
+
       const stageId = stageElement.id;
       const stageData = stages.find((stage) => stage.id === stageId);
   
       // If the status is 'errors', log the error to the console
       if (stageData.status === "error") {
+        if(!warningElement.classList.contains("hidden")){
+            warningElement.classList.add("hidden"); 
+            stageElement.classList.remove("active");
+        }else{
         updateWarning(stageData.error);
         stageElement.classList.add("active"); // Add active styling for errors
-      }
+      }}
     });
   });
+
+  export function loadingStart(){
+    const loading = document.getElementById("loader");
+    loading.classList.remove("hidden");
+  }
+  export function loadingEnd(){
+    const loading = document.getElementById("loader");
+    loading.classList.add("hidden"); 
+  }
+
+
+  

@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
-import { marked } from 'marked';
-import {updateStageColor} from "../sidepanel/tracker"
+import {updateStageColor, loadingStart, loadingEnd} from "../sidepanel/tracker"
+import {jobDescPrompt} from "./prompts"
 // The underlying model has a context of 1,024 tokens, out of which 26 are used by the internal prompt,
 // leaving about 998 tokens for the input text. Each token corresponds, roughly, to about 4 characters, so 4,000
 // is used as a limit to warn the user the content might be too long to summarize.
@@ -45,34 +45,31 @@ async function onContentChange(newContent) {
   showSummary(summary);
 }
 
-export async function generateSummary(text) {
+export async function generateSummary(text, summaryContext ) {
   try {
+    if(!summaryContext) summaryContext = jobDescPrompt;
     const session = await createSummarizer(
       {
-        type: "teaser",
-        format: "markdown",
+        type: "key-points",
+        format: "plain-text",
         length: "short",
-        sharedContext: `
-        Extract only these details from the job description:
-Experience: Required years/fields.
-Sponsorship: Provided or needed.
-Salary: Range or amount.
-Skills: Key technical/soft skills.
-Location: Onsite/remote/city.
-Present in bullet points.
-
-`,
+        context: summaryContext
+        
       },
       (message, progress) => {
         console.log(`${message} (${progress.loaded}/${progress.total})`);
       }
     );
+    loadingStart();
     const summary = await session.summarize(text);
+    loadingEnd();
     session.destroy();
+    
     return summary;
   } catch (e) {
     console.log('Summary generation failed');
-    return 'Error: ' + e.message;
+    updateStageColor("stage-1", "error",e.message);
+    return 
   }
 }
 
@@ -80,8 +77,8 @@ export async function SummarizerAiModel() {
   const model = await window.ai.summarizer.capabilities();
     switch (model.available){
       case "no":
-        updateStageColor("stage-1", "error");
-        throw new Error('AI Summarization is not supported');
+        updateStageColor("stage-1", "error",'AI Summarization is not supported');
+        break;
       case "readily":
         updateStageColor("stage-1", "completed");
         break;
@@ -100,8 +97,8 @@ export async function SummarizerAiModel() {
 
 async function createSummarizer(config, downloadProgressCallback) {
   if (!window.ai || !window.ai.summarizer) {
-    updateStageColor("stage-1", "error");
-    throw new Error('AI Summarization is not supported in this browser');
+    updateStageColor("stage-1", "error",'AI Summarization is not supported in this browser' );
+    
   }
   SummarizerAiModel();
   const summarizationSession = await self.ai.summarizer.create(
@@ -112,7 +109,7 @@ async function createSummarizer(config, downloadProgressCallback) {
 }
 
 async function showSummary(text) {
-  summaryElement.innerHTML = DOMPurify.sanitize(marked.parse(text));
+  summaryElement.innerHTML = DOMPurify.sanitize(text);
 
 }
 

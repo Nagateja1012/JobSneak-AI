@@ -1,0 +1,2 @@
+export const resumePrompt = "Summarize the key skills and experience from this resume";
+export const jobDescPrompt = "Summarize this job description based on the qualifications,payscale,location,sponsorship and experience required";

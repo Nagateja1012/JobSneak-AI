@@ -17,13 +17,13 @@ body {
 }
 
 .logo-img {
-  width: 100px;
+  width: 50px;
   height: auto;
 }
 
 .title {
   margin-top: 10px;
-  font-size: 24px;
+  font-size: 12px;
   font-weight: bold;
   color: #333;
 }
@@ -130,13 +130,17 @@ body {
   font-weight: bold;
 }
 .warning {
+  position: relative;
   display: flex;
-  margin-top: 20px;
-  font-size: 18px;
+  margin-left: 20px;
+  font-size: 12px;
   font-weight: bold;
   color: red;
-  text-align: center;
   flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .tracker-stage .stage-tooltip {
@@ -186,12 +190,12 @@ body {
 }
 
 #summary{
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: #333;
   background-color: white;
   padding: 10px;
-  margin-left: 10px;
+  margin: 10px;
 }
 .warningheader{
   font-size: 8px;
@@ -199,3 +203,21 @@ body {
   color: #ff9500;
   padding: 10px;
 }
+
+
+
+.loader {
+  border: 8px solid #000000;
+  border-top: 8px solid #ff0303;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+

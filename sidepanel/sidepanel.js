@@ -3,6 +3,7 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs";
 import { generateSummary,SummarizerAiModel } from "../AI scripts/summarizer";
 import {updateStageColor} from "./tracker"
+import {resumePrompt} from "../AI scripts/prompts"
 let fullText = "";
 
 // Set the workerSrc to the bundled worker file
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const uploadResumeDiv = document.getElementById("upload-resume");
   const typeResumeDiv = document.getElementById("type-resume");
   const resumeSection = document.querySelector(".resume-selection");
+  const logoContainer = document.querySelector(".logo-container");
+  const preload = document.querySelector(".preload");
   const saveButton = document.getElementById("save-btn");
   const deleteButton = document.getElementById("delete-btn");
   const clear = document.getElementById("clear-btn");
@@ -64,10 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
   if (summary) {
     updateStageColor("stage-2","completed");
     profileDiv.classList.remove("hidden");
+    preload.classList.remove("hidden");
     resumeSection.classList.add("hidden"); 
+    logoContainer.classList.add("hidden"); 
   } else {
+    logoContainer.classList.remove("hidden"); 
     resumeSection.classList.remove("hidden"); 
     profileDiv.classList.add("hidden"); 
+    preload.classList.add("hidden");
   }
 })
   //Handle delete button click
@@ -87,13 +94,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle Save button click
   saveButton.addEventListener("click", async () => {
-    if (resumeOptionSelect.value === "upload") {
+    const additionalParameters = document.getElementById("additional").value;
+    console.log(additionalParameters)
+    if (resumeOptionSelect.value === "upload" && fullText !== "" ) {
       updateStageColor("stage-2","processing");
-    const sum = await generateSummary(fullText);
-    storeSummary(sum);
+    const sum = await generateSummary(fullText, resumePrompt);
+    additionalParameters? 
+    storeSummary(sum + " "+additionalParameters) : storeSummary(sum)
     }
     else{
+      if(document.getElementById("resume-text").value){
       storeSummary(document.getElementById("resume-text").value);
+      }
     }
   });
   // Trigger the initial change on load
