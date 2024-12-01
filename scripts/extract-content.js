@@ -7,9 +7,6 @@ function canBeParsed(document) {
 }
 
 function parse(document) {
-// const element = document.getElementById('job-details')
-// console.log(element)
-//  return element.textContent
   if (!canBeParsed(document)) {
     return false;
   }

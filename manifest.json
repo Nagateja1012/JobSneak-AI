@@ -15,8 +15,8 @@
   
   "host_permissions": ["http://*/*", "https://*/*"],
   "side_panel": {
-    "default_path": "popup/popup1.html",
-    "default_icon": "images/icon16.png"
+    "default_path": "sidepanel/sidepanel.html",
+    "default_icon": "images/icon32.png"
   },
   "action": {
     "default_icon": {

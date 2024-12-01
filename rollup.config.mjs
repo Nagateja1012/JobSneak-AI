@@ -5,9 +5,9 @@ import url from '@rollup/plugin-url';
 
 export default [
   {
-    input: 'sidepanel/index.js',
+    input: 'AI scripts/summarizer.js',
     output: {
-      dir: 'dist/sidepanel',
+      dir: 'dist/AI scripts',
       format: 'iife',
     },
     plugins: [
@@ -16,7 +16,7 @@ export default [
       copy({
         targets: [
           {
-            src: ['manifest.json', 'background.js', 'sidepanel', 'images', 'popup'],
+            src: ['manifest.json', 'background.js', 'sidepanel', 'images', 'AI scripts'],
             dest: 'dist'
           }
         ]
@@ -35,14 +35,14 @@ export default [
     ]
   },
   {
-    input: "popup/popup1.js",
+    input: "sidepanel/sidepanel.js",
     output: {
-      file: "dist/popup/popup1.js",
-      format: "iife", // Immediately Invoked Function Expression for browser compatibility
+      file: "dist/sidepanel/sidepanel.js",
+      format: "iife",
       name: "Popup"
     },
     plugins: [
-      nodeResolve(), // Resolves `node_modules` dependencies
+      nodeResolve(), 
       commonjs(),
       url({
         include: ["node_modules/pdfjs-dist/build/*.worker.min.mjs"],
