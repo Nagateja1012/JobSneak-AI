@@ -1,9 +1,8 @@
-
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs";
-import { generateSummary,SummarizerAiModel } from "../AI scripts/summarizer";
-import {updateStageColor} from "./tracker"
-import {resumePrompt} from "../AI scripts/prompts"
+import { generateSummary, SummarizerAiModel } from "../AI scripts/summarizer";
+import { updateStageColor } from "./tracker";
+import { resumePrompt } from "../AI scripts/prompts";
 let fullText = "";
 
 // Set the workerSrc to the bundled worker file
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteButton = document.getElementById("delete-btn");
   const clear = document.getElementById("clear-btn");
   const profileDiv = document.getElementById("profiledata");
-  
+  const heartDiv = document.querySelector(".heart-container");
 
   // Progress tracker stages
   const stages = [
@@ -32,24 +31,22 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   SummarizerAiModel();
-  
 
-    // Read the summary
-    async function readSummary() {
-      return (await chrome.storage.local.get("summary")).summary;
-      
-    }
-    //store summary
-    async function storeSummary(summary) {
-      await chrome.storage.local.set({ summary: summary });
-      updateStageColor("stage-2","completed");
-      window.location.reload(); 
-    }
-    //delete summary
-    async function deleteSummary() {
-     await chrome.storage.local.remove("summary")
-     window.location.reload(); 
-    }
+  // Read the summary
+  async function readSummary() {
+    return (await chrome.storage.local.get("summary")).summary;
+  }
+  //store summary
+  async function storeSummary(summary) {
+    await chrome.storage.local.set({ summary: summary });
+    updateStageColor("stage-2", "completed");
+    window.location.reload();
+  }
+  //delete summary
+  async function deleteSummary() {
+    await chrome.storage.local.remove("summary");
+    window.location.reload();
+  }
 
   // Initial setting: Show upload option by default
   resumeOptionSelect.addEventListener("change", function () {
@@ -63,57 +60,54 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //Initial setting: Hide the resume section
-  readSummary().then(summary => {
-  if (summary) {
-    updateStageColor("stage-2","completed");
-    profileDiv.classList.remove("hidden");
-    preload.classList.remove("hidden");
-    resumeSection.classList.add("hidden"); 
-    logoContainer.classList.add("hidden"); 
-  } else {
-    logoContainer.classList.remove("hidden"); 
-    resumeSection.classList.remove("hidden"); 
-    profileDiv.classList.add("hidden"); 
-    preload.classList.add("hidden");
-  }
-})
+  readSummary().then((summary) => {
+    if (summary) {
+      updateStageColor("stage-2", "completed");
+      profileDiv.classList.remove("hidden");
+      preload.classList.remove("hidden");
+      heartDiv.classList.remove("hidden");
+      resumeSection.classList.add("hidden");
+      logoContainer.classList.add("hidden");
+    } else {
+      logoContainer.classList.remove("hidden");
+      resumeSection.classList.remove("hidden");
+      profileDiv.classList.add("hidden");
+      preload.classList.add("hidden");
+      heartDiv.classList.add("hidden");
+    }
+  });
   //Handle delete button click
-  deleteButton.addEventListener("click", async () =>{
+  deleteButton.addEventListener("click", async () => {
     deleteSummary();
-  })
+  });
 
   //Handle clear button click
   clear.addEventListener("click", function () {
     document.getElementById("resume-file").value = "";
     document.getElementById("resume-text").value = "";
-    resumeOptionSelect.value = "upload"; 
+    resumeOptionSelect.value = "upload";
     uploadResumeDiv.classList.add("show");
     typeResumeDiv.classList.remove("show");
   });
 
-
   // Handle Save button click
   saveButton.addEventListener("click", async () => {
     const additionalParameters = document.getElementById("additional").value;
-    console.log(additionalParameters)
-    if (resumeOptionSelect.value === "upload" && fullText !== "" ) {
-      updateStageColor("stage-2","processing");
-    const sum = await generateSummary(fullText, resumePrompt);
-    additionalParameters? 
-    storeSummary(sum + " "+additionalParameters) : storeSummary(sum)
-    }
-    else{
-      if(document.getElementById("resume-text").value){
-      storeSummary(document.getElementById("resume-text").value);
+    if (resumeOptionSelect.value === "upload" && fullText !== "") {
+      updateStageColor("stage-2", "processing");
+      const sum = await generateSummary(fullText, resumePrompt);
+      additionalParameters
+        ? storeSummary(sum + " " + additionalParameters)
+        : storeSummary(sum);
+    } else {
+      if (document.getElementById("resume-text").value) {
+        storeSummary(document.getElementById("resume-text").value);
       }
     }
   });
   // Trigger the initial change on load
   resumeOptionSelect.dispatchEvent(new Event("change"));
 });
-
-
-
 
 document
   .getElementById("resume-file")

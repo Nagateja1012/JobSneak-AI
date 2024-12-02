@@ -1,14 +1,14 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import copy from 'rollup-plugin-copy';
-import url from '@rollup/plugin-url';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import copy from "rollup-plugin-copy";
+import url from "@rollup/plugin-url";
 
 export default [
   {
-    input: 'AI scripts/summarizer.js',
+    input: "AI scripts/summarizer.js",
     output: {
-      dir: 'dist/AI scripts',
-      format: 'iife',
+      dir: "dist/AI scripts",
+      format: "iife",
     },
     plugins: [
       commonjs(),
@@ -16,39 +16,42 @@ export default [
       copy({
         targets: [
           {
-            src: ['manifest.json', 'background.js', 'sidepanel', 'images', 'AI scripts'],
-            dest: 'dist'
-          }
-        ]
-      })
-    ]
+            src: [
+              "manifest.json",
+              "background.js",
+              "sidepanel",
+              "images",
+              "AI scripts",
+            ],
+            dest: "dist",
+          },
+        ],
+      }),
+    ],
   },
   {
-    input: 'scripts/extract-content.js',
+    input: "scripts/extract-content.js",
     output: {
-      dir: 'dist/scripts',
-      format: 'es'
+      dir: "dist/scripts",
+      format: "es",
     },
-    plugins: [
-      commonjs(),
-      nodeResolve(),
-    ]
+    plugins: [commonjs(), nodeResolve()],
   },
   {
     input: "sidepanel/sidepanel.js",
     output: {
       file: "dist/sidepanel/sidepanel.js",
       format: "iife",
-      name: "Popup"
+      name: "Popup",
     },
     plugins: [
-      nodeResolve(), 
+      nodeResolve(),
       commonjs(),
       url({
         include: ["node_modules/pdfjs-dist/build/*.worker.min.mjs"],
-        limit: 0, 
+        limit: 0,
         publicPath: "",
-      }) 
-    ]
-  }
+      }),
+    ],
+  },
 ];

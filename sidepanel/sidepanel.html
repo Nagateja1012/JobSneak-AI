@@ -9,11 +9,37 @@
   <body>
     <!-- Container for the main layout -->
     <div class="container">
+      <div class="heart-container">
+        <svg viewBox="0 0 24 24" class="heart-icon">
+          <defs>
+            <clipPath id="heart-clip">
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+            </clipPath>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            class="fill-background"
+            clip-path="url(#heart-clip)"
+            x="0"
+            y="24"
+            width="24"
+            height="0"
+          ></rect>
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            class="heart-outline"
+          ></path>
+        </svg>
+        <h2 id="heartPercent"></h2>
+      </div>
       <div class="preload">
-      <div class="warningheader" hidden id="warning"></div>
-      <div class="card" id="summary"></div>
-      <div class="loader" id = "loader"></div>
-    </div>
+        <div class="warningheader" hidden id="warning"></div>
+        <div class="card" id="summary"></div>
+        <div class="loader" id="loader"></div>
+      </div>
       <!-- Logo Section -->
       <div class="logo-container">
         <img src="../images/icon128.png" alt="Logo" class="logo-img" />
@@ -25,33 +51,23 @@
       <!-- Progress Tracker Section -->
 
       <div class="tracker-container">
-        <div class="tracker-stage" id="stage-2" >
+        <div class="tracker-stage" id="stage-2">
           <span class="stage-number"></span>
           <div class="stage-tooltip"></div>
         </div>
-        <div class="tracker-stage" id="stage-1" >
+        <div class="tracker-stage" id="stage-1">
           <span class="stage-number"></span>
           <div class="stage-tooltip"></div>
         </div>
-        <div class="tracker-stage" id="stage-3" >
+        <div class="tracker-stage" id="stage-3">
           <span class="stage-number"></span>
           <div class="stage-tooltip"></div>
         </div>
-        <div class="tracker-stage" id="stage-4" >
-          <span class="stage-number"></span>
-          <div class="stage-tooltip"></div>
-        </div>
-        <div class="tracker-stage" id="stage-5" >
-          <span class="stage-number"></span>
-          <div class="stage-tooltip"></div>
-        </div>
-        
       </div>
-      <div class="warning hidden"  id="warninge"></div>
+      <div class="warning hidden" id="warninge"></div>
       <div>
-       
-        <div class="buttons" id="profiledata" >
-          <h4 class="stitle1">Profile Data Available</h4>
+        <div class="buttons" id="profiledata">
+          <h4 class="stitle1">Profile Saved</h4>
           <button id="delete-btn">Delete Saved Data</button>
         </div>
       </div>
@@ -77,9 +93,7 @@
             name="additional parameters"
             rows="3"
             placeholder="like sponsorship required..."
-            
           ></textarea>
-
         </div>
 
         <div id="type-resume" class="resume-option">

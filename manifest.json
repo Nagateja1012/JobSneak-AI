@@ -5,14 +5,20 @@
   "description": "Take a quick glance of the job for easier filtering",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0rGdYnMnAJm24F1aVoygD+UJtTtFkRfju36f2Pp3keQQU6fXHNrddqpfMZXb+E9YJmRz+2jJgeEbMSN4m8zFD/9NrbNmfUrCvvnu6id6o1cMtdRsFNvLDsvDfY895kQ9d8543q5TCmGt1NGFBgzSp8wORBQNOYXlAmtRh2Ru2+pMC/v8i5lirkMQbWKe7y+tr6aq95KrILc+TxZmujqoTd0Tay5sNp3jCafdSexo2dOnCUR369KLRnkrakaZ9Jzak5C2ysHwcgmsJwvenFCbET2AvHjiHLGDDWNCQ+FYwzlMOnJCOjDskWur8XAGozKKYpPXtJ88BYfuPu80QXfZaQIDAQAB",
   "trial_tokens": [
-    "AkGcfoMTs5K71isPlCiY033XA9HKSjUJvPCF6K56eqY7mAUAsR7NDbmIWDjomLgCREuOS38XAuafVTz209utDwQAAABzeyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vamdrYm1sZmZlYWRtZWZqZmdrY2tmYnBja3Bvb2loY2UiLCJmZWF0dXJlIjoiQUlTdW1tYXJpemF0aW9uQVBJIiwiZXhwaXJ5IjoxNzUzMTQyNDAwfQ=="
+    "Ar+BJLGQE0lCkxvqlsX//p00e03EZuNciiF0tJNV41yL9scWqGCjVKpSUxAhg8PS9ZU/TJMFCNVNPz9yTXpc7AkAAAB4eyJvcmlnaW4iOiJjaHJvbWUtZXh0ZW5zaW9uOi8vamdrYm1sZmZlYWRtZWZqZmdrY2tmYnBja3Bvb2loY2UiLCJmZWF0dXJlIjoiQUlQcm9tcHRBUElGb3JFeHRlbnNpb24iLCJleHBpcnkiOjE3NjA0ODYzOTl9"
   ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
-  "permissions": ["tabs", "scripting", "sidePanel", "storage"],
-  
+  "permissions": [
+    "tabs",
+    "scripting",
+    "sidePanel",
+    "storage",
+    "aiLanguageModelOriginTrial"
+  ],
+  "minimum_chrome_version": "131",
   "host_permissions": ["http://*/*", "https://*/*"],
   "side_panel": {
     "default_path": "sidepanel/sidepanel.html",
@@ -25,6 +31,5 @@
       "128": "images/icon128.png"
     },
     "default_title": "JobSneakAI"
-   
   }
 }
