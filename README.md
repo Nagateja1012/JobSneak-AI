@@ -15,7 +15,7 @@ Simplify your job search with a **Chrome extension** powered by **Google Gemini 
 ---
 
 ## Demo  
-Watch the [demo video](#) for a quick overview.
+Watch the [demo video](https://youtu.be/JHRqYkQPcZg) for a quick overview.
 
 ---
 
